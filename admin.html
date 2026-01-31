@@ -42,6 +42,7 @@ button {
   <h3>🎬 Yangi kino qo‘shish</h3>
   <input id="code" placeholder="Kino kodi (A001)">
   <input id="title" placeholder="Kino nomi">
+<input id="genre" placeholder="Janr (Action, Drama)">
   <input id="poster" placeholder="Poster URL">
   <textarea id="desc" placeholder="Tavsif"></textarea>
   <button onclick="addMovie()">➕ Qo‘shish</button>
@@ -51,7 +52,7 @@ button {
 </div>
 
 <script>
-const ADMIN_PASSWORD = "1234"; // O'ZGARTIR!!!
+const ADMIN_PASSWORD = "Timk@1995"; // O'ZGARTIR!!!
 
 let movies = JSON.parse(localStorage.getItem("movies") || "[]");
 
