@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Kino Club</title>
+
 <style>
 body {
   margin: 0;
@@ -35,18 +36,18 @@ header {
   height: 230px;
   object-fit: cover;
 }
-.card .info {
+.info {
   padding: 10px;
 }
-.card h3 {
+.info h3 {
   margin: 0;
   font-size: 16px;
 }
-.card p {
+.info p {
   font-size: 13px;
   opacity: 0.8;
 }
-.card a {
+.info a {
   display: block;
   margin-top: 10px;
   text-align: center;
@@ -57,9 +58,6 @@ header {
   border-radius: 8px;
   font-weight: bold;
 }
-.card a:hover {
-  opacity: 0.9;
-}
 footer {
   text-align: center;
   padding: 15px;
@@ -68,37 +66,43 @@ footer {
 }
 </style>
 </head>
+
 <body>
 
 <header>🎬 Kino Club</header>
 
-<div class="container">
-
-  <!-- KINO 1 -->
-  <div class="card">
-    <img src="https://via.placeholder.com/300x450?text=Kino+1">
-    <div class="info">
-      <h3>Kino nomi 1</h3>
-      <p>Janr: Drama · 2024</p>
-      <a href="https://t.me/USERNAME_BOT?start=A001">▶ Telegram’da ko‘rish</a>
-    </div>
-  </div>
-
-  <!-- KINO 2 -->
-  <div class="card">
-    <img src="https://via.placeholder.com/300x450?text=Kino+2">
-    <div class="info">
-      <h3>Kino nomi 2</h3>
-      <p>Janr: Action · 2023</p>
-      <a href="https://t.me/USERNAME_BOT?start=A002">▶ Telegram’da ko‘rish</a>
-    </div>
-  </div>
-
-</div>
+<div class="container" id="movies"></div>
 
 <footer>
 💰 Obuna: 2 000 so‘m / oy · Videolar Telegram orqali
 </footer>
+
+<script>
+const BOT_USERNAME = "USERNAME_BOT"; // 👈 BOT USERNAME
+
+const movies = JSON.parse(localStorage.getItem("movies") || "[]");
+const container = document.getElementById("movies");
+
+if (movies.length === 0) {
+  container.innerHTML = "<p>Hozircha kinolar yo‘q</p>";
+}
+
+movies.forEach(m => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <img src="${m.poster}">
+    <div class="info">
+      <h3>${m.title}</h3>
+      <p>${m.desc}</p>
+      <a href="https://t.me/${BOT_USERNAME}?start=${m.code}">
+        ▶ Telegram’da ko‘rish
+      </a>
+    </div>
+  `;
+  container.appendChild(card);
+});
+</script>
 
 </body>
 </html>
