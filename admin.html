@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<style>
+body {
+  background:#0f0f0f;
+  color:#fff;
+  font-family:Arial;
+  padding:20px;
+}
+input, textarea, button {
+  width:100%;
+  margin:8px 0;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+}
+button {
+  background:#e50914;
+  color:#fff;
+  font-weight:bold;
+}
+.card {
+  background:#1c1c1c;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+}
+</style>
+</head>
+<body>
+
+<h2>🔐 Admin Panel</h2>
+
+<input id="password" type="password" placeholder="Admin parol">
+<button onclick="login()">Kirish</button>
+
+<div id="panel" style="display:none;">
+  <h3>🎬 Yangi kino qo‘shish</h3>
+  <input id="code" placeholder="Kino kodi (A001)">
+  <input id="title" placeholder="Kino nomi">
+  <input id="poster" placeholder="Poster URL">
+  <textarea id="desc" placeholder="Tavsif"></textarea>
+  <button onclick="addMovie()">➕ Qo‘shish</button>
+
+  <h3>📦 Kino ro‘yxati</h3>
+  <div id="list"></div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = "1234"; // O'ZGARTIR!!!
+
+let movies = JSON.parse(localStorage.getItem("movies") || "[]");
+
+function login() {
+  if (password.value === ADMIN_PASSWORD) {
+    panel.style.display = "block";
+  } else {
+    alert("❌ Noto‘g‘ri parol");
+  }
+}
+
+function addMovie() {
+  const m = {
+    code: code.value,
+    title: title.value,
+    poster: poster.value,
+    desc: desc.value
+  };
+  movies.push(m);
+  localStorage.setItem("movies", JSON.stringify(movies));
+  render();
+}
+
+function render() {
+  list.innerHTML = "";
+  movies.forEach(m => {
+    list.innerHTML += `
+      <div class="card">
+        <b>${m.title}</b><br>
+        ${m.code}<br>
+        <small>${m.desc}</small>
+      </div>
+    `;
+  });
+}
+render();
+</script>
+
+</body>
+</html>
