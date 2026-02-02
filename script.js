@@ -143,3 +143,23 @@ function addService(){
 
     alert("Xizmat saqlandi");
 }
+function renderServices(){
+
+    const services = getServices();
+    let html = "";
+
+    services.forEach(s => {
+
+        html += `
+        <div style="background:#fff;padding:12px;border-radius:10px;margin-top:10px">
+            <b>${s.title}</b>
+            <p>${s.desc || ""}</p>
+            <a href="${s.telegram}" target="_blank">
+                Telegram orqali bog‘lanish
+            </a>
+        </div>
+        `;
+    });
+
+    return html;
+}
