@@ -1,43 +1,82 @@
-function saveVideo(){
-    const val = document.getElementById("videoInput").value;
-    localStorage.setItem("video", val);
-    alert("Video saqlandi");
+function getItems(){
+    return JSON.parse(localStorage.getItem("items") || "[]");
 }
 
-function saveImage(){
-    const val = document.getElementById("imageInput").value;
-    localStorage.setItem("image", val);
-    alert("Rasm saqlandi");
+function saveItems(items){
+    localStorage.setItem("items", JSON.stringify(items));
 }
 
-function saveTelegram(){
-    const val = document.getElementById("telegramInput").value;
-    localStorage.setItem("telegram", val);
-    alert("Telegram link saqlandi");
+function addItem(){
+
+    const type = document.getElementById("type").value;
+    const place = document.getElementById("place").value;
+    const value = document.getElementById("value").value;
+
+    if(!value){
+        alert("Link kiriting");
+        return;
+    }
+
+    const items = getItems();
+
+    items.push({
+        type: type,
+        place: place,
+        value: value
+    });
+
+    saveItems(items);
+
+    document.getElementById("value").value = "";
+
+    alert("Saqlandi");
+}
+
+function renderItems(page){
+
+    const items = getItems();
+    let html = "";
+
+    items.forEach(item => {
+
+        let show = false;
+
+        if(item.place === "home" && page === "home"){
+            show = true;
+        }
+
+        if(item.place === "home_services" && (page === "home" || page === "services")){
+            show = true;
+        }
+
+        if(!show) return;
+
+        if(item.type === "video"){
+            html += `
+                <iframe width="100%" height="220"
+                src="${item.value}"
+                frameborder="0" allowfullscreen></iframe>
+            `;
+        }
+
+        if(item.type === "image"){
+            html += `
+                <img src="${item.value}">
+            `;
+        }
+
+    });
+
+    return html;
 }
 
 function showPage(page){
 
     let html = "";
 
-    const video = localStorage.getItem("video");
-    const image = localStorage.getItem("image");
-    const telegram = localStorage.getItem("telegram");
-
     if(page === "home"){
-        html += "<h3>Bosh sahifa</h3>";
-
-        if(video){
-            html += `<iframe width="100%" height="215" src="${video}" frameborder="0" allowfullscreen></iframe>`;
-        }
-
-        if(image){
-            html += `<img src="${image}">`;
-        }
-
-        if(telegram){
-            html += `<p><a href="${telegram}" target="_blank">Telegram kanalga o‘tish</a></p>`;
-        }
+        html = "<h3>Bosh sahifa</h3>";
+        html += renderItems("home");
     }
 
     if(page === "search"){
@@ -55,14 +94,8 @@ function showPage(page){
     }
 
     if(page === "services"){
-        html = `
-            <h3>Xizmatlar</h3>
-            <ul>
-                <li>Video xizmatlari</li>
-                <li>Reklama joylash</li>
-                <li>Telegram reklama</li>
-            </ul>
-        `;
+        html = "<h3>Xizmatlar</h3>";
+        html += renderItems("services");
     }
 
     document.getElementById("content").innerHTML = html;
