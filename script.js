@@ -94,8 +94,10 @@ function showPage(page){
     }
 
     if(page === "services"){
-        html = "<h3>Xizmatlar</h3>";
-        html += renderItems("services");
+    html = "<h3>Xizmatlar</h3>";
+    html += renderItems("services");
+    html += renderServices();
+}
     }
 
     document.getElementById("content").innerHTML = html;
@@ -106,3 +108,38 @@ document.addEventListener("DOMContentLoaded", ()=>{
         showPage("home");
     }
 });
+function getServices(){
+    return JSON.parse(localStorage.getItem("services") || "[]");
+}
+
+function saveServices(list){
+    localStorage.setItem("services", JSON.stringify(list));
+}
+
+function addService(){
+
+    const title = document.getElementById("serviceTitle").value;
+    const desc = document.getElementById("serviceDesc").value;
+    const tg = document.getElementById("serviceTelegram").value;
+
+    if(!title || !tg){
+        alert("Xizmat nomi va telegram link kiriting");
+        return;
+    }
+
+    const services = getServices();
+
+    services.push({
+        title:title,
+        desc:desc,
+        telegram:tg
+    });
+
+    saveServices(services);
+
+    document.getElementById("serviceTitle").value="";
+    document.getElementById("serviceDesc").value="";
+    document.getElementById("serviceTelegram").value="";
+
+    alert("Xizmat saqlandi");
+}
