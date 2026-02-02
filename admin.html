@@ -2,6 +2,7 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin panel</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -9,17 +10,23 @@
 
 <h2>Admin panel</h2>
 
-<h4>YouTube video qo‘shish</h4>
-<input type="text" id="videoInput" placeholder="YouTube embed link">
-<button onclick="saveVideo()">Saqlash</button>
+<h4>Kontent turi</h4>
+<select id="type">
+  <option value="video">YouTube video</option>
+  <option value="image">Rasm</option>
+</select>
 
-<h4>Rasm joylash (URL orqali)</h4>
-<input type="text" id="imageInput" placeholder="Rasm URL">
-<button onclick="saveImage()">Saqlash</button>
+<h4>Qayerda ko‘rinsin?</h4>
+<select id="place">
+  <option value="home">Faqat bosh sahifa</option>
+  <option value="home_services">Bosh sahifa va xizmatlar</option>
+</select>
 
-<h4>Telegram kanal linki</h4>
-<input type="text" id="telegramInput" placeholder="https://t.me/...">
-<button onclick="saveTelegram()">Saqlash</button>
+<h4>Link (video embed yoki rasm URL)</h4>
+<input type="text" id="value" placeholder="https://...">
+
+<br><br>
+<button onclick="addItem()">Saqlash</button>
 
 <br><br>
 <a href="index.html">Saytga o‘tish</a>
